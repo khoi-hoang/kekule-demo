@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kekule Demo</title>
+
+    <script src="node_modules/kekule/dist/kekule.min.js"></script>
+    <script src="node_modules/raphael/raphael.min.js"></script>
+    <script src="node_modules/three/build/three.min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="node_modules/kekule/dist/themes/default/kekule.css"/>
+</head>
+<body>
+<div id="chem-composer-widget"></div>
+<br>
+<button type="button"
+        onclick="fuckIt()">Say Cheese!
+</button>
+<script>
+    const composerWidget = new Kekule.Editor.Composer(document.getElementById('chem-composer-widget'));
+    composerWidget.setDimension("800px", "500px");
+
+    // Limit the power of the composerWidget
+    composerWidget.commonToolButtons = ["newDoc", "undo", "redo", "copy", "cut", "paste", "loadData", "saveData"];
+    composerWidget.chemToolButtons = ["manipulate", "erase", "bond", "atomAndFormula", "ring"];
+
+    // Focus on one molecule only!
+    composerWidget.allowCreateNewChild = false;
+
+    function fuckIt() {
+        const mol = composerWidget.exportObj(Kekule.Molecule);
+        console.log(Kekule.IO.saveFormatData(mol, "smi"));
+    }
+</script>
+</body>
+</html>
